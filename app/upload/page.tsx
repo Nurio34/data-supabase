@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 
 export type Status = "success" | "failed";
 
-function page() {
+function Page() {
     const initialState = {
         status: "",
         msg: "",
@@ -139,4 +139,4 @@ function page() {
     );
 }
 
-export default page;
+export default Page;

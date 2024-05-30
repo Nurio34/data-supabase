@@ -23,7 +23,7 @@ function Tasks() {
             msg: "",
             error: null,
         });
-    }, [isOpen]);
+    }, [isOpen, setNewState]);
 
     return (
         <div className="relative">
