@@ -46,6 +46,7 @@ async function Product(props: Props) {
             const validatedData = result.data;
             const { name, description, imageUrl, price, contactEmail, boost } =
                 validatedData;
+            console.log(imageUrl);
 
             return (
                 <section className="  lg:my-[4vh] lg:mx-[20vw] space-y-[2vh]">

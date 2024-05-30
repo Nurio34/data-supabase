@@ -2,32 +2,31 @@
 
 import { useFormState } from "react-dom";
 import { createForm } from "../actions";
-import { useEffect, useState } from "react";
 import { ZodIssue } from "zod";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+
+export type Status = "success" | "failed";
 
 function page() {
-    const [message, setMessage] = useState<any>("");
-    const [errors, setErrors] = useState<any>([]);
-
-    const initialState: any = {
+    const initialState = {
         status: "",
         msg: "",
+        error: null as ZodIssue[] | any,
     };
 
     const [state, formAction] = useFormState(createForm, initialState);
+    console.log(state.error);
 
     useEffect(() => {
-        if (state.status === "failed") {
-            setErrors(
-                state.msg.map((error: any) => {
-                    return { name: error.path[0], message: error.message };
-                }),
-            );
-        } else {
-            setMessage(state.msg);
-            setErrors([]);
+        if (state.status === "success") {
+            toast.success(state.msg);
+            redirect("/");
+        } else if (state.status === "failed") {
+            toast.error(state.msg);
         }
-    }, [state]);
+    });
 
     return (
         <div className="flex flex-col lg:flex-row gap-[1vh] lg:gap-[4vw] justify-center items-center lg:items-start ">
@@ -45,11 +44,13 @@ function page() {
                         id="name"
                     />
                     <p className=" text-error text-sm font-semibold">
-                        {
-                            errors.filter(
-                                (error: any) => error.name === "name",
-                            )[0]?.message
-                        }
+                        {state.status === "failed" &&
+                            state.error?.some(
+                                (error: ZodIssue) => error.path[0] === "name",
+                            ) &&
+                            state.error?.filter(
+                                (error: ZodIssue) => error.path[0] === "name",
+                            )[0].message}
                     </p>
                 </label>
                 <label htmlFor="price" className="grid">
@@ -61,11 +62,13 @@ function page() {
                         id="price"
                     />
                     <p className=" text-error text-sm font-semibold">
-                        {
-                            errors.filter(
-                                (error: any) => error.name === "price",
-                            )[0]?.message
-                        }
+                        {state.status === "failed" &&
+                            state.error?.some(
+                                (error: ZodIssue) => error.path[0] === "price",
+                            ) &&
+                            state.error?.filter(
+                                (error: ZodIssue) => error.path[0] === "price",
+                            )[0].message}
                     </p>
                 </label>
                 <label htmlFor="description" className="grid">
@@ -77,11 +80,15 @@ function page() {
                         id="description"
                     />
                     <p className=" text-error text-sm font-semibold">
-                        {
-                            errors.filter(
-                                (error: any) => error.name === "description",
-                            )[0]?.message
-                        }
+                        {state.status === "failed" &&
+                            state.error?.some(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "description",
+                            ) &&
+                            state.error?.filter(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "description",
+                            )[0].message}
                     </p>
                 </label>
                 <label htmlFor="image" className="grid">
@@ -93,27 +100,35 @@ function page() {
                         id="image"
                     />
                     <p className=" text-error text-sm font-semibold">
-                        {
-                            errors.filter(
-                                (error: any) => error.name === "image",
-                            )[0]?.message
-                        }
+                        {state.status === "failed" &&
+                            state.error?.some(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "imageUrl",
+                            ) &&
+                            state.error?.filter(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "imageUrl",
+                            )[0].message}
                     </p>
                 </label>
-                <label htmlFor="email" className="grid">
+                <label htmlFor="contactEmail" className="grid">
                     Contact Email
                     <input
                         className=" input input-bordered input-sm"
-                        type="email"
-                        name="email"
-                        id="email"
+                        type="contactEmail"
+                        name="contactEmail"
+                        id="contactEmail"
                     />
                     <p className=" text-error text-sm font-semibold">
-                        {
-                            errors.filter(
-                                (error: any) => error.name === "email",
-                            )[0]?.message
-                        }
+                        {state.status === "failed" &&
+                            state.error?.some(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "contactEmail",
+                            ) &&
+                            state.error?.filter(
+                                (error: ZodIssue) =>
+                                    error.path[0] === "contactEmail",
+                            )[0].message}
                     </p>
                 </label>
                 <button type="submit" className="btn btn-accent btn-outline">

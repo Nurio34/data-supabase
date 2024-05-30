@@ -12,9 +12,11 @@ function Product(props: ProductType) {
                 <figure className="relative bg-base-300 w-full aspect-square">
                     <Image
                         src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/newImages/${imageUrl}`}
-                        layout="fill"
+                        fill
                         style={{ objectFit: "cover" }}
                         alt={name}
+                        priority
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </figure>
                 <div className="py-[1vh] px-[2vw]">
