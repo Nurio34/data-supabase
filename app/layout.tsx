@@ -20,7 +20,9 @@ export default function RootLayout({
         <html lang="en" data-theme="bumblebee">
             <body className={inter.className}>
                 <Header />
-                <main className="py-[2vh] px-[4vh]">{children}</main>
+                <main className="py-[2vh] px-[4vh] min-h-screen">
+                    {children}
+                </main>
                 <Footer />
             </body>
         </html>

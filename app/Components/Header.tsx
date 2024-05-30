@@ -4,7 +4,7 @@ import Upload from "./Upload";
 
 function Header() {
     return (
-        <header className=" py-[2vh] px-[4vw] flex justify-between shadow-md shadow-secondary">
+        <header className=" py-[2vh] px-[4vw] flex justify-between items-center shadow-md shadow-secondary">
             <Logo />
             <Upload />
         </header>
