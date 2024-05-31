@@ -2,15 +2,46 @@ import React from "react";
 import { createClient } from "../supabase/client";
 import { ProductSchema, ProductType } from "../types";
 import { notFound } from "next/navigation";
-import { z } from "zod";
 import Image from "next/image";
-import { PostgrestError } from "@supabase/supabase-js";
+import type { Metadata, ResolvingMetadata } from "next";
+import { createImageUrl } from "../utils";
 
 type Props = {
     params: {
         slug: string;
     };
 };
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata,
+): Promise<Metadata> {
+    const id = params.slug;
+
+    const supabase = createClient();
+    const { data: product, error }: any = await supabase
+        .from("newProductsSchema")
+        .select()
+        .match({ id })
+        .single();
+
+    if (error) {
+        return {};
+    }
+
+    // optionally access and extend (rather than replace) parent metadata
+
+    return {
+        title: product.name,
+        description: product.description,
+        openGraph: {
+            images: [createImageUrl(product.imageUrl)],
+        },
+        alternates: {
+            canonical: `https://ecommerce-nextjs-supabase.vercel.app/${id}`,
+        },
+    };
+}
 
 export async function generateStaticParams() {
     const supabase = createClient();
@@ -63,7 +94,7 @@ async function Product(props: Props) {
                         <div className="flex justify-between gap-[2vw]">
                             <div className=" relative w-1/2 aspect-square bg-base-200 ">
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/newImages/${imageUrl}`}
+                                    src={createImageUrl(imageUrl)}
                                     alt={name}
                                     layout="fill"
                                     style={{ objectFit: "cover" }}
