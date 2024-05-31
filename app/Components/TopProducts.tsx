@@ -29,7 +29,10 @@ async function TopProducts() {
                     <ul className="grow grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[2vw]">
                         {validatedData?.map((product) => {
                             return (
-                                <li className=" bg-secondary rounded-[1vw] overflow-hidden">
+                                <li
+                                    key={product.id}
+                                    className=" bg-secondary rounded-[1vw] overflow-hidden"
+                                >
                                     <Link href={`/${product.id}`}>
                                         <figure className="relative bg-base-300 w-full aspect-square">
                                             <Image
