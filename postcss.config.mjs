@@ -1,10 +1,13 @@
-/** @type {import('postcss-load-config').Config} */
+import cssnano from "cssnano";
+import { Config } from "postcss-load-config";
+
+/** @type {Config} */
 const config = {
     plugins: [
         "postcss-preset-env",
-        // Add cssnano as a plugin
-        process.env.NODE_ENV === "production" ? require("cssnano") : null,
-    ].filter(Boolean),
+        // Conditionally add cssnano as a plugin
+        ...(process.env.NODE_ENV === "production" ? [cssnano()] : []),
+    ],
 };
 
 export default config;
