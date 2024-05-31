@@ -29,8 +29,6 @@ export async function generateMetadata(
         return {};
     }
 
-    // optionally access and extend (rather than replace) parent metadata
-
     return {
         title: product.name,
         description: product.description,

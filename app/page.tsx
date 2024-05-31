@@ -4,8 +4,6 @@ import { ProductSchema } from "./types";
 import Products from "./Components/Products";
 import { notFound, redirect } from "next/navigation";
 
-export const revalidate = 0;
-
 export default async function Home() {
     const supabase = createClient();
 

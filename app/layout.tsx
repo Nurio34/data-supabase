@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ["latin"] });
+const josefin = Josefin_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Easy Sell Products",
@@ -27,13 +28,13 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" data-theme="bumblebee">
-            <body className={inter.className}>
+            <body className={nunito.className}>
                 <Toaster />
-                <Header />
+                <Header font={josefin.className} />
                 <main className="py-[2vh] px-[4vh] min-h-screen">
                     {children}
                 </main>
-                <Footer />
+                <Footer font={josefin.className} />
             </body>
         </html>
     );

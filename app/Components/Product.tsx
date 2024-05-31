@@ -15,7 +15,6 @@ function Product(props: ProductType) {
                         fill
                         style={{ objectFit: "cover" }}
                         alt={name}
-                        priority
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                 </figure>
