@@ -5,6 +5,7 @@ import Link from "next/link";
 
 function Product(props: ProductType) {
     const { id, name, imageUrl, price } = props;
+    console.log(imageUrl);
 
     return (
         <li className=" bg-secondary rounded-[1vw] overflow-hidden">

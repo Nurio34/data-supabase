@@ -3,6 +3,8 @@ import { createClient } from "../supabase/client";
 import { ProductSchema, ProductType } from "../types";
 import Products from "./Products";
 import Product from "./Product";
+import Link from "next/link";
+import Image from "next/image";
 
 async function TopProducts() {
     const supabase = createClient();
@@ -26,7 +28,28 @@ async function TopProducts() {
                     </div>
                     <ul className="grow grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[2vw]">
                         {validatedData?.map((product) => {
-                            return <Product key={product.id} {...product} />;
+                            return (
+                                <li className=" bg-secondary rounded-[1vw] overflow-hidden">
+                                    <Link href={`/${product.id}`}>
+                                        <figure className="relative bg-base-300 w-full aspect-square">
+                                            <Image
+                                                src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/newImages/${product.imageUrl}`}
+                                                fill
+                                                style={{ objectFit: "cover" }}
+                                                alt={product.name}
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                priority
+                                            />
+                                        </figure>
+                                        <div className="py-[1vh] px-[2vw]">
+                                            <p className="truncate">
+                                                {product.name}
+                                            </p>
+                                            <p>{product.price} $</p>
+                                        </div>
+                                    </Link>
+                                </li>
+                            );
                         })}
                     </ul>
                 </article>
